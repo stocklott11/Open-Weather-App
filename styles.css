@@ -78,4 +78,11 @@
   .badge.err { background: #3a0f0f; color: var(--err); }
   
   .footer { text-align: center; color: var(--muted); padding: 30px; }
-  
+
+  .chip.active {
+    background: #22c55e;  /* bright green for active favorite */
+    color: #0f172a;
+    font-weight: 600;
+    border: 1px solid #16a34a;
+    transform: scale(1.05);
+  }  

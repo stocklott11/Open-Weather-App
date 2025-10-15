@@ -96,22 +96,32 @@ function getFavorites() {
 function saveFavorites(list) {
   localStorage.setItem(FAV_KEY, JSON.stringify(list));
 }
+
 function renderFavorites() {
   const favs = getFavorites();
   const box = el.favoritesList();
   box.innerHTML = "";
+
   favs.forEach(label => {
     const chip = document.createElement("button");
     chip.className = "chip";
     chip.textContent = label;
     chip.title = "Search this favorite";
+
+    // highlight currently active favorite
+    if (label.toLowerCase() === state.currentCityLabel.toLowerCase()) {
+      chip.classList.add("active");
+    }
+
     chip.addEventListener("click", () => {
       el.q().value = label;
       searchByQuery();
     });
+
     box.appendChild(chip);
   });
 }
+
 
 // Main search flows
 async function searchByQuery() {
@@ -173,6 +183,7 @@ async function searchCommon(q) {
     state.currentCityLabel = label || (useZip ? `${q}, US` : titleCase(q));
 
     renderAll();
+    renderFavorites();
     setStatus(`Loaded ${state.currentCityLabel}`);
   } catch (err) {
     console.error(err);
