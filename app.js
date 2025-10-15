@@ -1,6 +1,16 @@
 const OPENWEATHERMAP_KEY = "6e3ef99dd1eabf920efb0c9042d4df61";
 const API_BASE = "https://api.openweathermap.org/data/2.5";
 
+
+const isUSZip = q => /^\d{5}(-\d{4})?$/.test(q);
+
+const urlCurrentByZip = zip =>
+  `${API_BASE}/weather?zip=${encodeURIComponent(zip)},US&appid=${OPENWEATHERMAP_KEY}`;
+
+const urlForecastByZip = zip =>
+  `${API_BASE}/forecast?zip=${encodeURIComponent(zip)},US&appid=${OPENWEATHERMAP_KEY}`;
+
+
 // App state kept minimal
 const state = {
   lastQuery: "",
@@ -39,7 +49,6 @@ async function fetchWithRetry(url, tries = 3, delayMs = 400) {
   try {
     const res = await fetch(url);
     if (!res.ok) {
-      // 5xx may be transient
       if (res.status >= 500 && tries > 1) {
         await new Promise(r => setTimeout(r, delayMs));
         return fetchWithRetry(url, tries - 1, delayMs * 2); // recursion
@@ -149,15 +158,20 @@ async function searchCommon(q) {
   try {
     setStatus("Loading weather...");
     state.lastQuery = q;
+
+    const useZip = isUSZip(q);
+
     const [cur, fc] = await Promise.all([
-      fetchWithRetry(urlForCityCurrent(q)),
-      fetchWithRetry(urlForCityForecast(q))
+      fetchWithRetry(useZip ? urlCurrentByZip(q) : urlForCityCurrent(q)),
+      fetchWithRetry(useZip ? urlForecastByZip(q) : urlForCityForecast(q))
     ]);
+
     state.currentWeather = cur;
     state.forecast = fc;
-    // City label from API to keep it consistent
+
     const label = [cur?.name, cur?.sys?.country].filter(Boolean).join(", ");
-    state.currentCityLabel = label || titleCase(q);
+    state.currentCityLabel = label || (useZip ? `${q}, US` : titleCase(q));
+
     renderAll();
     setStatus(`Loaded ${state.currentCityLabel}`);
   } catch (err) {
@@ -165,6 +179,7 @@ async function searchCommon(q) {
     setStatus(`Error: ${err.message}`, "error");
   }
 }
+
 
 // Renderers
 function renderAll() {
