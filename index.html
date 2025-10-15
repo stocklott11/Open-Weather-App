@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weather Forecast</title>
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Day.js for date formatting -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js" defer></script>
+  <!-- Chart.js for a simple temperature chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <h1>Weather Forecast</h1>
+    <p class="sub">Enter a city or ZIP and get a 5 day forecast</p>
+  </header>
+
+  <main class="container">
+    <section class="search">
+      <input id="q" type="text" placeholder="e.g., Rexburg or 83440" />
+      <button id="btnSearch" aria-label="Search weather">Search</button>
+      <button id="btnUseLocation" aria-label="Use my location">Use my location</button>
+      <span id="status" role="status" aria-live="polite"></span>
+    </section>
+
+    <section class="favorites">
+      <h2>Favorites</h2>
+      <div id="favoritesList" class="chips"></div>
+      <div class="fav-actions">
+        <button id="btnAddFavorite">Add current to favorites</button>
+        <button id="btnClearFavorites">Clear favorites</button>
+      </div>
+    </section>
+
+    <section class="results">
+      <div id="current" class="card"></div>
+      <canvas id="tempChart" width="600" height="300" class="card"></canvas>
+      <div id="forecast" class="grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Data from OpenWeatherMap. Built with vanilla JS, Day.js, and Chart.js.</small>
+  </footer>
+</body>
+</html>
