@@ -4,7 +4,7 @@ I created this project to get hands-on experience with JavaScript by building so
 
 My goal was to learn more about how JavaScript works with APIs, handles asynchronous code, and updates the web page dynamically. I also experimented with modern JavaScript features and libraries like Day.js and Chart.js to make the app more useful and polished.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/oW4oPNGx2yE)
 
 # Development Environment
 
