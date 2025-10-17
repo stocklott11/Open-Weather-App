@@ -12,8 +12,7 @@ I built this project in Visual Studio Code using Git and GitHub for version cont
 
 - **Languages:** JavaScript, HTML, and CSS  
 - **Runtime Environment:** Node.js  
-- **APIs:** OpenWeatherMap API for live weather data  
-- **Libraries:**  
+- **APIs:** OpenWeatherMap API for live weather data   
 - **Day.js** – for date and time formatting  
 - **Chart.js** – for displaying temperature trends in an interactive line chart  
 
